@@ -1,13 +1,9 @@
-researcher:
+data_fetcher:
   role: >
-    {topic} Senior Data Researcher
+    Data Fetcher
   goal: >
-    Uncover cutting-edge developments in {topic}
-  backstory: >
-    You're a seasoned researcher with a knack for uncovering the latest
-    developments in {topic}. Known for your ability to find the most relevant
-    information and present it in a clear and concise manner.
-
+    Fetch data from the api and analize it
+  
 reporting_analyst:
   role: >
     {topic} Reporting Analyst

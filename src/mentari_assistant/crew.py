@@ -2,6 +2,8 @@ from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
 from crewai.agents.agent_builder.base_agent import BaseAgent
 from typing import List
+
+import requests
 # If you want to run a snippet of code before or after the crew starts,
 # you can use the @before_kickoff and @after_kickoff decorators
 # https://docs.crewai.com/concepts/crews#example-crew-class-with-decorators
@@ -19,10 +21,19 @@ class PersonalAssistant():
     
     # If you would like to add tools to your agents, you can learn more about it here:
     # https://docs.crewai.com/concepts/agents#agent-tools
+    
+    def get_user_data():
+        url = "https://mentari.unpam.ac.id/api/user-course"
+        response = requests.get(url, headers={"Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjcxMWEzZmZlLTAzMTgtNDQ1MC1hNTc4LWY2MTk4ZGY4Y2FjMSIsInVzZXJuYW1lIjoiMjMxMDExNDAzMDk2Iiwicm9sZSI6Ik1BSEFTSVNXQSIsImZ1bGxuYW1lIjoiTVVIQU1BRCBMVVRGSSBBWklaQU4iLCJwcm9kaSI6WyI1NTIwMSJdLCJpYXQiOjE3NTk4OTY5OTcsImV4cCI6MTc2NzY3Mjk5N30.PIAYS-2LWZQrVBHMVkxKk_woACWnCcgx7UY4VcaHwPs"})
+        response.raise_for_status()
+        return response.json()
+    
+    
     @agent
-    def researcher(self) -> Agent:
+    def data_fetcher(self) -> Agent:
         return Agent(
             config=self.agents_config['researcher'], # type: ignore[index]
+            tools=[self.get_user_data]
             verbose=True
         )
 
